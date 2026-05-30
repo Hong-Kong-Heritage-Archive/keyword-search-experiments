@@ -1,14 +1,17 @@
-# Install Docker
+# Installation
+
+
+## Install docker
 
 ```
 sudo snap install docker
 ```
 
-# Reference:
+## Reference
 
 https://hub.docker.com/_/postgres
 
-# Using Postgresql
+## Using Postgresql
 
 Start and run postgre. Use sudo if required.
 
@@ -23,7 +26,7 @@ CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS  
 db225a0f7fc9   postgres   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   some-postgres
 ```
 
-Stop
+After you are done
 ```
 $ docker stop some-postgres
 ```
@@ -34,7 +37,7 @@ $ sudo docker container prune
 ```
 
 
-# Connecting to the database
+## Connecting to the database
 
 Run inside docker
 ```
@@ -47,3 +50,6 @@ $ sudo apt install postgresql-client
 $ psql -h localhost -p 5432 -U postgres
 ```
 
+# Implementing full text search
+
+TBD
