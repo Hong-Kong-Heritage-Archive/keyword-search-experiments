@@ -50,6 +50,29 @@ $ sudo apt install postgresql-client
 $ psql -h localhost -p 5432 -U postgres
 ```
 
-# Implementing full text search
+# Import data
 
-TBD
+```
+$ PGPASSWORD=mysecretpassword psql -h localhost -p 5432 -U postgres
+
+postgres=# create table books ( isbn text, title text );
+CREATE TABLE
+
+postgres=# \copy books FROM 'simplified.csv' WITH (FORMAT csv, HEADER true);
+COPY 98
+
+postgres=# select * from books LIMIT 5;
+   isbn    |                          title                           
+-----------+----------------------------------------------------------
+ 439554934 | Harry Potter and the Sorcerer's Stone (Harry Potter, #1)
+ 316015849 | Twilight (Twilight, #1)
+ 61120081  | To Kill a Mockingbird
+ 743273567 | The Great Gatsby
+ 525478817 | The Fault in Our Stars
+(5 rows)
+```
+
+# Start creating full text search
+
+
+
