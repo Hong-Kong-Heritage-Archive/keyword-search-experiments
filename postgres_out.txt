@@ -1,4 +1,4 @@
-241d28e9c58039bf941d95c09a779d9facaecbc98290c8cc03695828ab86ed68
+3c43a6d1ef12e782f4c9bf8f76f130332814fb0e9dc70910e2545a8a1b81d4d2
 localhost:5432 - no response
 Waiting for PostgreSQL to be ready...
 localhost:5432 - accepting connections
@@ -78,7 +78,19 @@ EXPLAIN select * from books WHERE to_tsvector('english', title) @@ to_tsquery('e
          Index Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'' & ''harri'''::tsquery)
 (4 rows)
 
-select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter & Harry');
+
+=== Select books by keyword (Full text search 2) ===
+
+EXPLAIN select * from books WHERE to_tsvector('english', title) @@ phraseto_tsquery('english', 'Harry Potter');
+                                              QUERY PLAN                                               
+-------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on books  (cost=17.23..21.49 rows=1 width=64)
+   Recheck Cond: (to_tsvector('english'::regconfig, title) @@ '''harri'' <-> ''potter'''::tsquery)
+   ->  Bitmap Index Scan on title_index_gin  (cost=0.00..17.23 rows=1 width=0)
+         Index Cond: (to_tsvector('english'::regconfig, title) @@ '''harri'' <-> ''potter'''::tsquery)
+(4 rows)
+
+select * from books WHERE to_tsvector('english', title) @@ phraseto_tsquery('english', 'Harry Potter');
     isbn    |                            title                             
 ------------+--------------------------------------------------------------
  439554934  | Harry Potter and the Sorcerer's Stone (Harry Potter, #1)
