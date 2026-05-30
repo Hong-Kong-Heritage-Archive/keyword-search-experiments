@@ -1,4 +1,4 @@
-5ecb61587f19e1bd3b40c22b8236ac3a022c92809caa50cca6c33ffcb460def1
+241d28e9c58039bf941d95c09a779d9facaecbc98290c8cc03695828ab86ed68
 localhost:5432 - no response
 Waiting for PostgreSQL to be ready...
 localhost:5432 - accepting connections
@@ -69,16 +69,16 @@ select * from books WHERE title LIKE '%Potter%';
 
 === Select books by keyword (Full text search) ===
 
-EXPLAIN select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter');
-                                       QUERY PLAN                                        
------------------------------------------------------------------------------------------
- Bitmap Heap Scan on books  (cost=12.83..22.29 rows=4 width=64)
-   Recheck Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'''::tsquery)
-   ->  Bitmap Index Scan on title_index_gin  (cost=0.00..12.82 rows=4 width=0)
-         Index Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'''::tsquery)
+EXPLAIN select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter & Harry');
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on books  (cost=17.23..21.49 rows=1 width=64)
+   Recheck Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'' & ''harri'''::tsquery)
+   ->  Bitmap Index Scan on title_index_gin  (cost=0.00..17.23 rows=1 width=0)
+         Index Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'' & ''harri'''::tsquery)
 (4 rows)
 
-select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter');
+select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter & Harry');
     isbn    |                            title                             
 ------------+--------------------------------------------------------------
  439554934  | Harry Potter and the Sorcerer's Stone (Harry Potter, #1)

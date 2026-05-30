@@ -48,9 +48,9 @@ select * from books WHERE title LIKE '%Potter%';
 \echo === Select books by keyword (Full text search) ===
 \echo
 
-EXPLAIN select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter');
+EXPLAIN select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter & Harry');
 
-select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter');
+select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter & Harry');
 
 EOF
 
