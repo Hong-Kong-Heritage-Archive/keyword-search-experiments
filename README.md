@@ -8,6 +8,11 @@ It contains the following
 * And output after running the script:  postgres_out.txt and sqlite_out.txt
 
 Refer to
-* [sqlite.md](sqlite.md)
-* [postgre.md](postgre.md)
+
+| Database | Notes | Script | Output |
+| -------- | -------- | -------- | -------- |
+| SQLITE    | [sqlite.md](sqlite.md)    | [test_sqlite.sh](test_sqlite.sh)   | [sqlite_out.txt](sqlite_out.txt)  |
+| Postgres  | [postgre.md](postgre.md)  | [test_postgres.sh](test_postgres.sh)   | [postgres_out.txt](postgres_out.txt) |
+
+
 
