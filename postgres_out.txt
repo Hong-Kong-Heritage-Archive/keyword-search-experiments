@@ -1,0 +1,95 @@
+5ecb61587f19e1bd3b40c22b8236ac3a022c92809caa50cca6c33ffcb460def1
+localhost:5432 - no response
+Waiting for PostgreSQL to be ready...
+localhost:5432 - accepting connections
+
+=== Create Books table ===
+
+create table books ( isbn text, title text );
+CREATE TABLE
+CREATE INDEX title_index ON books (title);
+CREATE INDEX
+CREATE INDEX title_index_gin ON books USING GIN ( to_tsvector('english', title) );
+CREATE INDEX
+
+=== Import data ===
+
+COPY  books FROM STDIN WITH (FORMAT csv, HEADER true);
+COPY 98
+select * from books LIMIT 5;
+   isbn    |                          title                           
+-----------+----------------------------------------------------------
+ 439554934 | Harry Potter and the Sorcerer's Stone (Harry Potter, #1)
+ 316015849 | Twilight (Twilight, #1)
+ 61120081  | To Kill a Mockingbird
+ 743273567 | The Great Gatsby
+ 525478817 | The Fault in Our Stars
+(5 rows)
+
+
+=== Select books by title ===
+
+EXPLAIN select * from books WHERE title = 'The Great Gatsby';
+                                QUERY PLAN                                
+--------------------------------------------------------------------------
+ Bitmap Heap Scan on books  (cost=4.18..12.64 rows=4 width=64)
+   Recheck Cond: (title = 'The Great Gatsby'::text)
+   ->  Bitmap Index Scan on title_index  (cost=0.00..4.18 rows=4 width=0)
+         Index Cond: (title = 'The Great Gatsby'::text)
+(4 rows)
+
+select * from books WHERE title = 'The Great Gatsby';
+   isbn    |      title       
+-----------+------------------
+ 743273567 | The Great Gatsby
+(1 row)
+
+
+=== Select books by keyword (Sequential Scan) ===
+
+EXPLAIN select * from books WHERE title LIKE '%Potter%';
+                      QUERY PLAN                       
+-------------------------------------------------------
+ Seq Scan on books  (cost=0.00..21.00 rows=1 width=64)
+   Filter: (title ~~ '%Potter%'::text)
+(2 rows)
+
+select * from books WHERE title LIKE '%Potter%';
+    isbn    |                            title                             
+------------+--------------------------------------------------------------
+ 439554934  | Harry Potter and the Sorcerer's Stone (Harry Potter, #1)
+ 043965548X | Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)
+ 439358078  | Harry Potter and the Order of the Phoenix (Harry Potter, #5)
+ 439064864  | Harry Potter and the Chamber of Secrets (Harry Potter, #2)
+ 439139600  | Harry Potter and the Goblet of Fire (Harry Potter, #4)
+ 545010225  | Harry Potter and the Deathly Hallows (Harry Potter, #7)
+ 439785960  | Harry Potter and the Half-Blood Prince (Harry Potter, #6)
+(7 rows)
+
+
+=== Select books by keyword (Full text search) ===
+
+EXPLAIN select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter');
+                                       QUERY PLAN                                        
+-----------------------------------------------------------------------------------------
+ Bitmap Heap Scan on books  (cost=12.83..22.29 rows=4 width=64)
+   Recheck Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'''::tsquery)
+   ->  Bitmap Index Scan on title_index_gin  (cost=0.00..12.82 rows=4 width=0)
+         Index Cond: (to_tsvector('english'::regconfig, title) @@ '''potter'''::tsquery)
+(4 rows)
+
+select * from books WHERE to_tsvector('english', title) @@ to_tsquery('english', 'Potter');
+    isbn    |                            title                             
+------------+--------------------------------------------------------------
+ 439554934  | Harry Potter and the Sorcerer's Stone (Harry Potter, #1)
+ 043965548X | Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)
+ 439358078  | Harry Potter and the Order of the Phoenix (Harry Potter, #5)
+ 439064864  | Harry Potter and the Chamber of Secrets (Harry Potter, #2)
+ 439139600  | Harry Potter and the Goblet of Fire (Harry Potter, #4)
+ 545010225  | Harry Potter and the Deathly Hallows (Harry Potter, #7)
+ 439785960  | Harry Potter and the Half-Blood Prince (Harry Potter, #6)
+(7 rows)
+
+some-postgres
+some-postgres
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES

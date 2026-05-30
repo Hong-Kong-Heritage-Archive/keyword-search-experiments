@@ -1,0 +1,35 @@
+=== Import books.csv ===
+isbn       title                                                   
+---------  --------------------------------------------------------
+439023483  The Hunger Games (The Hunger Games, #1)                 
+439554934  Harry Potter and the Sorcerer's Stone (Harry Potter, #1)
+316015849  Twilight (Twilight, #1)                                 
+61120081   To Kill a Mockingbird                                   
+743273567  The Great Gatsby                                        
+...
+
+=== Full title search ===
+QUERY PLAN
+`--SEARCH books USING INDEX idx_title (title=?)
+isbn       title           
+---------  ----------------
+743273567  The Great Gatsby
+
+=== Like searches ===
+Harry and Prince
+QUERY PLAN
+`--SCAN books
+isbn       title                                                    
+---------  ---------------------------------------------------------
+439785960  Harry Potter and the Half-Blood Prince (Harry Potter, #6)
+
+=== Create FTS Indexes ===
+...
+
+=== Perform full text search ===
+Harry and Prince
+QUERY PLAN
+`--SCAN book_fts VIRTUAL TABLE INDEX 0:M1M1
+isbn       title                                                    
+---------  ---------------------------------------------------------
+439785960  Harry Potter and the Half-Blood Prince (Harry Potter, #6)
