@@ -74,5 +74,5 @@ postgres=# select * from books LIMIT 5;
 
 # Start creating full text search
 
-
+Refer to [test_postgres.sh](test_postgres.sh) on how to setup indexing properly.
 
