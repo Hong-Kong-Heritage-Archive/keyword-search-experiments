@@ -114,15 +114,15 @@ def search_similar_titles(query_term="Harry Potter"):
 
         # Use similarity() for fuzzy matching
         cursor.execute(f"""
-        SELECT title, isbn
+        SELECT title, isbn, similarity(title, '{query_term}') AS similarity_score
         FROM books
         WHERE similarity(title, '{query_term}') > 0.3
         ORDER BY similarity(title, '{query_term}') DESC;
         """)
 
         results = cursor.fetchall()
-        for title, isbn in results:
-            print(f"Title: {title}, ISBN: {isbn}")
+        for title, isbn, similarity_score in results:
+            print(f"Title: {title}, ISBN: {isbn}, Similarity: {similarity_score:.2f}")
 
     except Exception as e:
         print(f"Error: {e}")

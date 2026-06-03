@@ -1,0 +1,10 @@
+Successfully imported data from books.csv to books table
+Total books in books: 99
+Searching for titles similar to 'Harry Potter'...
+Title: Harry Potter and the Order of the Phoenix (Harry Potter, #5), ISBN: 439358078, Similarity: 0.35
+Title: Harry Potter and the Sorcerer's Stone (Harry Potter, #1), ISBN: 439554934, Similarity: 0.35
+Title: Harry Potter and the Deathly Hallows (Harry Potter, #7), ISBN: 545010225, Similarity: 0.35
+Title: Harry Potter and the Half-Blood Prince (Harry Potter, #6), ISBN: 439785960, Similarity: 0.34
+Title: Harry Potter and the Goblet of Fire (Harry Potter, #4), ISBN: 439139600, Similarity: 0.34
+Title: Harry Potter and the Prisoner of Azkaban (Harry Potter, #3), ISBN: 043965548X, Similarity: 0.33
+Title: Harry Potter and the Chamber of Secrets (Harry Potter, #2), ISBN: 439064864, Similarity: 0.32
