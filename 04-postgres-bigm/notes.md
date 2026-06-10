@@ -30,8 +30,8 @@ GIN index on 'title' ensured.
 Data imported from traditional.csv.
 
 --- Execution Plan ---
-Seq Scan on books  (cost=0.00..23.93 rows=293 width=68)
-  Filter: (bigm_similarity(title, '哈利波特'::text) > '0'::double precision)
+Seq Scan on books  (cost=0.00..21.00 rows=1 width=68)
+  Filter: (title =% '哈利波特'::text)
 
 --- Search Results ---
 Searching for titles matching: '哈利波特'...

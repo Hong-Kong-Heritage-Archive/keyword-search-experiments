@@ -1,0 +1,15 @@
+Successfully imported data from books.csv to books table
+Total books in books: 99
+Explain searching for titles similar to '哈利波特'...
+Sort  (cost=29.95..30.52 rows=230 width=94)
+  Sort Key: (similarity(title, '哈利波特'::text)) DESC
+  ->  Seq Scan on books  (cost=0.00..20.93 rows=230 width=94)
+        Filter: (similarity(title, '哈利波特'::text) > '0.3'::double precision)
+Searching for titles similar to '哈利波特'...
+Title: 哈利波特與密室 (哈利波特, #2), ISBN: 439064864, Similarity: 0.45
+Title: 哈利波特與魔法石 (哈利波特, #1), ISBN: 439554934, Similarity: 0.42
+Title: 哈利波特與火焰盃 (哈利波特, #4), ISBN: 439139600, Similarity: 0.42
+Title: 哈利波特與混血王子 (哈利波特, #6), ISBN: 439785960, Similarity: 0.38
+Title: 哈利波特與死神的聖物 (哈利波特, #7), ISBN: 545010225, Similarity: 0.36
+Title: 哈利波特與鳳凰會的密令 (哈利波特, #5), ISBN: 439358078, Similarity: 0.33
+Title: 哈利波特與阿茲卡班的囚徒 (哈利波特, #3), ISBN: 043965548X, Similarity: 0.31

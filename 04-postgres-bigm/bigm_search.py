@@ -66,17 +66,20 @@ def main():
                 )
         print(f"Data imported from {args.csv}.")
 
+        # Set similarity socre to minimum to see all matches
+        cur.execute("SET pg_bigm.similarity_limit = 0.01;")
+
         # 4. Search using pg_bigm
         # The ~* operator is used for bigm matching (case-insensitive)
         print(f"\n--- Execution Plan ---")
-        cur.execute("EXPLAIN SELECT bigm_similarity( title, %s ), isbn, title FROM books WHERE bigm_similarity( title, %s ) > 0", (args.search,args.search))
+        cur.execute("EXPLAIN SELECT bigm_similarity( title, %s ), isbn, title FROM books WHERE title =%% %s", (args.search,args.search))
         plan = cur.fetchall()
         for line in plan:
             print(line[0])
 
         print(f"\n--- Search Results ---")
         print(f"Searching for titles matching: '{args.search}'...")
-        cur.execute("SELECT bigm_similarity( title, %s ), isbn, title FROM books WHERE bigm_similarity( title, %s ) > 0", (args.search,args.search))
+        cur.execute("SELECT bigm_similarity( title, %s ), isbn, title FROM books WHERE title =%% %s", (args.search,args.search))
         results = cur.fetchall()
 
         if results:
