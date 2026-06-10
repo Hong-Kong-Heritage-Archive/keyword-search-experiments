@@ -29,6 +29,8 @@ Table 'books' ensured.
 GIN index on 'title' ensured.
 Data imported from traditional.csv.
 
+--- Set Similarity Limit ---
+
 --- Execution Plan ---
 Seq Scan on books  (cost=0.00..21.00 rows=1 width=68)
   Filter: (title =% '哈利波特'::text)

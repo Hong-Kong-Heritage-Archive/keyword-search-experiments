@@ -67,7 +67,8 @@ def main():
         print(f"Data imported from {args.csv}.")
 
         # Set similarity socre to minimum to see all matches
-        cur.execute("SET pg_bigm.similarity_limit = 0.01;")
+        print(f"\n--- Set Similarity Limit ---")
+        cur.execute("SET pg_bigm.similarity_limit TO 0.01;")
 
         # 4. Search using pg_bigm
         # The ~* operator is used for bigm matching (case-insensitive)
