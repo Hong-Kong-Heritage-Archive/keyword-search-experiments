@@ -89,6 +89,23 @@ def main():
         else:
             print("No matches found.")
 
+        print(f"\n--- Execution Plan with LIKE ---")
+        cur.execute("EXPLAIN SELECT bigm_similarity( title, %s ), isbn, title FROM books WHERE title LIKE likequery( %s )", (args.search,args.search))
+        plan = cur.fetchall()
+        for line in plan:
+            print(line[0])
+
+        print(f"\n--- Search Results with LIKE ---")
+        print(f"Searching for titles matching: '{args.search}'...")
+        cur.execute("SELECT bigm_similarity( title, %s ), isbn, title FROM books WHERE title LIKE likequery( %s )", (args.search,args.search))
+        results = cur.fetchall()
+
+        if results:
+            for row in results:
+                print(f"Score: {row[0]} - Found: ISBN {row[1]} - Title: {row[2]}")
+        else:
+            print("No matches found.")
+
         # 5. Delete the table
         cur.execute("DROP TABLE books;")
         conn.commit()

@@ -51,6 +51,26 @@ Table 'books' deleted successfully.
 Connection closed.
 ```
 
+# Output results using LIKE
+
+
+```
+--- Execution Plan with LIKE ---
+Seq Scan on books  (cost=0.00..21.00 rows=1 width=68)
+  Filter: (title ~~ '%哈利波特%'::text)
+
+--- Search Results with LIKE ---
+Searching for titles matching: '哈利波特'...
+Score: 0.23529412 - Found: ISBN 439554934 - Title: 哈利波特與魔法石 (哈利波特, #1)
+Score: 0.1904762 - Found: ISBN 043965548X - Title: 哈利波特與阿茲卡班的囚徒 (哈利波特, #3)
+Score: 0.2 - Found: ISBN 439358078 - Title: 哈利波特與鳳凰會的密令 (哈利波特, #5)
+Score: 0.25 - Found: ISBN 439064864 - Title: 哈利波特與密室 (哈利波特, #2)
+Score: 0.23529412 - Found: ISBN 439139600 - Title: 哈利波特與火焰盃 (哈利波特, #4)
+Score: 0.21052632 - Found: ISBN 545010225 - Title: 哈利波特與死神的聖物 (哈利波特, #7)
+Score: 0.22222222 - Found: ISBN 439785960 - Title: 哈利波特與混血王子 (哈利波特, #6)
+```
+
+
 # Bigm similarity calculations
 
 Sensitivity can be fine tuned.
