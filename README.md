@@ -17,6 +17,7 @@ Refer to
 | Postgres bigm (CN books) | [04-postgres-bigm/notes.md](04-postgres-bigm/notes.md) | [04-postgres-bigm/bigm_search.py](04-postgres-bigm/bigm_search.py) | [04-postgres-bigm/notes.md](04-postgres-bigm/notes.md) |  
 | Postgres trgm (CN books) | [05-postgres-trgm-cn/postgre.md](05-postgres-trgm-cn/postgre.md)  | [05-postgres-trgm-cn/test_postgres_trgm.py](05-postgres-trgm-cn/test_postgres_trgm.py)   | [05-postgres-trgm-cn/stdout.txt](05-postgres-trgm-cn/stdout.txt) |
 | Postgres bigm (EN books) | [06-postgres-bigm-en/notes.md](06-postgres-bigm-en/notes.md) | [06-postgres-bigm-en/bigm_search.py](06-postgres-bigm-en/bigm_search.py) | [06-postgres-bigm-en/notes.md](06-postgres-bigm-en/notes.md) |  
+| Postgres JSON | [07-postgres-json/jsonb.md](07-postgres-json/jsonb.md) | [07-postgres-json/test_postgres.sh](07-postgres-json/test_postgres.sh) | [07-postgres-json/stdout.txt](07-postgres-json/stdout.txt) |
 
 
 # Online Suggestions for searching Chinese book titles

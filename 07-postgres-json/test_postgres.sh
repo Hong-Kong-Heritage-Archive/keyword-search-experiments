@@ -15,9 +15,13 @@ CREATE TABLE books (
     data jsonb
 );
 
+\set ECHO none
+
 -- Use sed to escape single quotes and expand the JSON array into multiple rows
 INSERT INTO books (data) 
 SELECT jsonb_array_elements(CAST('$(sed "s/'/''/g" books.json)' AS jsonb));
+
+\set ECHO all
 
 -- Enable the trigram extension
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
@@ -38,7 +42,7 @@ ORDER BY score DESC;
 
 -- Perform a similarity search using the % operator.
 -- Added parentheses around (data->>'title') to fix operator precedence issues.
-SELECT *, similarity((data->>'title'), 'Harry Potter') AS score 
+SELECT data->>'title' as TITLE, similarity((data->>'title'), 'Harry Potter') AS score 
 FROM books 
 WHERE (data->>'title') % 'Harry Potter'
 ORDER BY score DESC;
